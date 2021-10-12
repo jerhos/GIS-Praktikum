@@ -1,0 +1,2 @@
+# GIS-Praktikum
+Praktikumsaufgaben GIS
