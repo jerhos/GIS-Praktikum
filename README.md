@@ -1,2 +1,5 @@
 # GIS-Praktikum
-Praktikumsaufgaben GIS
+Praktikumsaufgaben GIS <br>
+[Link zum Ordner]()
+[Link zur Aufgabenliste]()
+
