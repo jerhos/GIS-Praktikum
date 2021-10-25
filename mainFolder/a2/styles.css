@@ -1,0 +1,27 @@
+header {
+    font-family: 'Noto Sans Mono', monospace;  
+}
+nav {
+    background: rgba(255, 255, 255, 0.5);
+    position: fixed;
+}
+main {
+    font-family: 'Noto Sans', sans-serif; 
+    display: grid;
+}
+footer {
+    background: rgb(255, 255, 255);
+    font-family: 'Noto Sans Mono', monospace; 
+    box-sizing: border-box;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-content: stretch;
+    position: fixed;
+    bottom: 0px; 
+}
+[href] {
+    color: rgb(0, 68, 0);
+}
+
+
