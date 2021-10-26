@@ -1,27 +1,63 @@
+/*Navigation*/
+nav {
+    background: rgba(245, 245, 245, 0.85);
+    position: fixed;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 13vh;
+    box-shadow: 0px 1px rgba(50, 50,50, 0.3);
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+}
+nav .image {
+    max-height: 80%;
+    align-self: normal;
+    justify-self: center;
+    padding: 10px;
+    
+    
+}
+nav a:hover{
+font-size: larger;      
+}
+
+/*Grundstruktur*/
+body {
+    margin: 0px;
+    padding-bottom: 10vh;
+}
 header {
     font-family: 'Noto Sans Mono', monospace;  
 }
-nav {
-    background: rgba(255, 255, 255, 0.5);
-    position: fixed;
-}
-main {
+main div{
     font-family: 'Noto Sans', sans-serif; 
-    display: grid;
+    display: flex;
+    flex-direction: column;
 }
 footer {
-    background: rgb(255, 255, 255);
-    font-family: 'Noto Sans Mono', monospace; 
-    box-sizing: border-box;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-content: stretch;
+    /*Box-Layout*/
+    background: rgb(245, 245, 245); 
     position: fixed;
-    bottom: 0px; 
+    width: 100vw;
+    /*Content-Layout*/
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    bottom: 0px;
+    font-family: 'Noto Sans Mono', sans-serif;
+    line-height: 25%; 
 }
+
+
+/*Detailstruktur*/
 [href] {
-    color: rgb(0, 68, 0);
+    color: rgb(187, 0, 0);
 }
-
-
+#wiki::selection {
+   background-color: rgb(255, 174, 0);
+}
+img,p {
+    max-width: 100%;
+    max-height: 100%;
+}
