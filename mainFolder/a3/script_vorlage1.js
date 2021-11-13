@@ -24,6 +24,7 @@ function func2(name) {
     return func3();
 }
 /* -- HIER BITTE IHRE LÖSUNG ZUR AUFGABE 1 EINTRAGEN
+ *
  * 1. "Ich heiße Jerry."
  * 2. "Ich esse gerne Pizza."
  * 3. "Ich gehöre zu Generation Z"
@@ -45,15 +46,93 @@ let events = [
     ["Cat Stevens", 12.99],
     ["Mark Forster", 2.1],
     ["Helene Fischer", 3.1],
-    ["Bee Gees", 25.2],
+    ["Bee Gees", 25.2] // STAYIN' ALIVE
 ];
 // -- HIER BITTE IHRE LÖSUNG ZUR AUFGABE 2 EINTRAGEN
+let stringOut = "";
 // Lösung a) ...
+let aLength = events.length;
+console.log(`Arraylänge: ${aLength}`);
 // Lösung b) ...
+for (let i of events) {
+    console.log(i);
+}
 // Lösung c) ...
+function highestTP(Array) {
+    let price = 0;
+    for (let i = 0; i < Array.length; i++) {
+        for (let j = 0; j < Array[i].length; j++) {
+            if (parseFloat(Array[i][j]) > price) {
+                price = parseFloat(Array[i][j]);
+            }
+        }
+    }
+    return price;
+}
+console.log(`Höchster Preis: ${highestTP(events)}`);
 // Lösung d) ...
+function searchFor(Array, artist) {
+    let found = false;
+    for (let i = 0; i < Array.length; i++) {
+        if (Array[i][0].toString().toLowerCase() === artist.toLowerCase()) {
+            found = true;
+            break;
+        }
+    }
+    return found;
+}
+// Test
+stringOut = "Metallica";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
+stringOut = "metallica";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
+stringOut = "MetallICa";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
+stringOut = "Genesis";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
 // Lösung e) ...
+function factorial(n) {
+    let i = n;
+    while (i > 1) {
+        n *= i - 1;
+        i--;
+    }
+    return n;
+}
+console.log(factorial(4));
+console.log(factorial(5));
+console.log(factorial(10));
 // Lösung f) ...
+stringOut = "";
+let count = 0;
+for (let i = 1; i <= 100; i++) {
+    if (i % 3 === 0) {
+        stringOut += String(i) + " ";
+        count++;
+    }
+}
+console.log(stringOut);
+console.log(`Anzahl an Nummern, die restlos durch 3 teilbar sind: ${count}`);
 // Lösung g) ...
+class ConcertEvent {
+    interpret = "";
+    price = 0;
+    constructor(i, p) {
+        this.interpret = i;
+        this.price = p;
+    }
+    show() {
+        console.log(`Int: ${this.interpret} | Pr: ${this.price}`);
+    }
+}
 // Lösung h) ...
+let eventArray = new Array(events.length);
+for (let i = 0; i < events.length; i++) {
+    for (let j = 0; j < events[i].length; j++) {
+        eventArray[i] = new ConcertEvent(events[i][j - 1], events[i][j]);
+    }
+}
+for (let i in eventArray) {
+    eventArray[i].show();
+}
 //# sourceMappingURL=script_vorlage1.js.map
