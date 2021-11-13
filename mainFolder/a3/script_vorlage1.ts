@@ -31,6 +31,7 @@ function func2(name: string): string {
 }
 
 /* -- HIER BITTE IHRE LÖSUNG ZUR AUFGABE 1 EINTRAGEN
+ *
  * 1. "Ich heiße Jerry."
  * 2. "Ich esse gerne Pizza."
  * 3. "Ich gehöre zu Generation Z"
@@ -42,35 +43,117 @@ function func2(name: string): string {
  * func3 ruft jetzt func1 auf und gibt mittels des Ergebnisses die Generation aus --> "Ich gehöre zu Generation Z"
  */
 
+
 // -- [Aufgabe 2]
 
 let events: any[][] = [
   ["Mark Knopfler", 10.1],
   ["Pink Floyd", 15.9],
-  ["Metallica", 20.1],
+  ["Metallica", 20.1],       
   ["Michael Bublé", 11.1],
-  ["Dire Straits", 12.2],
+  ["Dire Straits", 12.2],     // Sultans of Swing
   ["Mariah Carey", 1.1],
   ["Cat Stevens", 12.99],
   ["Mark Forster", 2.1],
   ["Helene Fischer", 3.1],
-  ["Bee Gees", 25.2],
+  ["Bee Gees", 25.2]          // STAYIN' ALIVE
 ];
 
 // -- HIER BITTE IHRE LÖSUNG ZUR AUFGABE 2 EINTRAGEN
 
+let stringOut: String = "";
+
 // Lösung a) ...
+let aLength: number = events.length;
+console.log(`Arraylänge: ${aLength}`);
 
 // Lösung b) ...
+for (let i of events) {
+  console.log(i);
+}
 
 // Lösung c) ...
+function highestTP(Array: any): number {
+  let price: number = 0;
+  for (let i: number = 0; i < Array.length; i++) {
+    for (let j: number = 0; j < Array[i].length; j++) {
+      if (parseFloat(Array[i][j]) > price) {
+        price = parseFloat (Array[i][j]);
+      }
+    }
+  } 
+  return price;
+}
+console.log(`Höchster Preis: ${highestTP(events)}`);
 
 // Lösung d) ...
+function searchFor(Array: any, artist: String): boolean {
+  let found: boolean = false;
+  for (let i: number = 0; i < Array.length; i++) {
+    if (Array[i][0].toString().toLowerCase() === artist.toLowerCase()) { 
+      found = true;
+      break;
+    }
+  }
+  return found;
+}
+// Test
+stringOut = "Metallica";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
+stringOut = "metallica";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
+stringOut = "MetallICa";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
+stringOut = "Genesis";
+console.log(stringOut += " " + String(searchFor(events, stringOut)));
 
 // Lösung e) ...
+function factorial(n: number): number{
+  let i: number = n;
+  while (i > 1) {
+    n *= i - 1;
+    i--;
+  }
+  return n;
+}
+console.log(factorial(4));
+console.log(factorial(5));
+console.log(factorial(10));
 
 // Lösung f) ...
+stringOut = "";
+let count: number = 0;
+for (let i: number = 1; i <= 100; i++) {
+  if (i % 3 === 0) {
+  stringOut += String(i) + " ";
+  count++; 
+  }
+}
+console.log(stringOut);
+console.log(`Anzahl an Nummern, die restlos durch 3 teilbar sind: ${count}`);
 
 // Lösung g) ...
+class ConcertEvent {
+  interpret: String = "";
+  price: number = 0;
+  
+  constructor(i: String, p: number) {
+    this.interpret = i;
+    this.price = p;
+  }
+  
+  show (): void {
+    console.log(`Int: ${this.interpret} | Pr: ${this.price}`);
+  }
+}
 
 // Lösung h) ...
+let eventArray: ConcertEvent[] = new Array(events.length);
+for (let i: number = 0; i < events.length; i++) {
+  for (let j: number = 0; j < events[i].length; j++) {
+      eventArray[i] = new ConcertEvent(events[i][j - 1], events[i][j]);
+  }
+}
+for (let i in eventArray) {
+  eventArray[i].show();
+}
