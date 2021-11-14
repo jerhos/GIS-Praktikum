@@ -18,6 +18,21 @@ footer {
     font-family: 'Noto Sans Mono', sans-serif;
     line-height: 25%; 
 }
+h1, h3 {
+    font-family: 'Noto Sans Mono', sans-serif;
+}
+main div {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-grow: 1, 5;
+}
 [href] {
     color: rgb(220, 220, 220);
+}
+#rotate {
+    writing-mode: vertical-rl;
+    box-sizing: border-box;
+    transform: rotate(180deg);
+    margin: 20px;
 }
