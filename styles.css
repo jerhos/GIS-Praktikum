@@ -34,5 +34,6 @@ main div {
     writing-mode: vertical-rl;
     box-sizing: border-box;
     transform: rotate(180deg);
-    margin: 20px;
+    margin-top: 25px;
+    margin-left: 50px;
 }
