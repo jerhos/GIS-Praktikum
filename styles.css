@@ -1,0 +1,23 @@
+body {
+    margin: 0px;
+    padding-bottom: 10vh;
+    background: rgb(50, 50, 50);
+    color: rgb(220, 220, 220);
+    font-family: 'Noto Sans', sans-serif;
+}
+footer {
+    /*Box-Layout*/
+    background:rgb(40, 40, 40); 
+    position: fixed;
+    width: 100vw;
+    /*Content-Layout*/
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    bottom: 0px;
+    font-family: 'Noto Sans Mono', sans-serif;
+    line-height: 25%; 
+}
+[href] {
+    color: rgb(220, 220, 220);
+}
