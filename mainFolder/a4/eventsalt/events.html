@@ -27,20 +27,50 @@
         </div>
     </header>
     <main>
-        
         <div class="topContainer">
-            <input id="eventnameIn" type="text" name="eventname" placeholder="Eventname"/>
-            <input id="interpretIn" type="text" name="interpret" placeholder="Interpret"/>
-            <input id="priceIn" type="number" name="price" placeholder="Price"/>
-            <input id="dateIn" type="datetime-local" name="Eventstart"/>
-            <button id="entryAdder">+</button>
-        </div>
-        
-        <div id="out">
-            <h1>Events</h1>
-        </div>
+            <form class="tableForm">
+                <div>
+                    <h1>Events</h1>
+                    <p>Da wir selten Events haben, bitten wir dich dir einfach selbst welche auszudenken. :)</p>
+                </div>
+                <div id="out">
+                    <table>
+                        <tr class="tableElement" >
+                            <td class= "eventnameOut" >Event</td> 
+                            <td class= "interpretOut" >Interpret</td> 
+                            <td class= "priceOut" >Preis</td> 
+                            <td class= "dateOut" >Termin</td> 
+                            <td class= "del"></td>
+                        </tr>
+                    </table>
+                </div>
 
-
+                <!--Eventname-->  
+                <div>             
+                    <label for="eventnameIn">Event</label>
+                    <input id="eventnameIn" type="text" placeholder="Whenever You Need Somebody">
+                </div>
+                <!--Interpret-->
+                <div>
+                    <label for="interpretIn">Interpret</label>
+                    <input id="interpretIn" type="text" placeholder="Rick Astley">
+                </div>
+                <!--Preis-->
+                <div>
+                    <label for="priceIn">Preis</label>
+                    <input id="priceIn" type="number" placeholder="0.00,-">
+                </div>
+                <!--Zeit und Datum-->
+                <div class="field">
+                    <label for="dateIn"> Eventstart</label>
+                    <input id="dateIn" type="datetime-local" placeholder="27.07.1987 - 03:35">
+                </div>
+                <!--Eventhinzufügen-Knopf-->
+                <div class="field">
+                    <button type="button" id="adderButton">+</button>
+                </div>
+            </form>
+        </div>
     <!--Tickets-->
     <a href="../ressources/ticketdown.jpg" download=" 100% Legitimes Konzertticket.jpg"><img src="../ressources/ticket.webp" alt="Ticket" title="Holen Sie sich ihr Ticket jetzt kostenlos!"></a>
     </main>
