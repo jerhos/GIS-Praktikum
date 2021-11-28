@@ -137,16 +137,17 @@ namespace a4 {
     function deleteEntry(parentElement: HTMLDivElement): void {
         let id: number = parseInt((<HTMLElement>parentElement).getAttribute("id"));
         console.log(`ID: ${id}`);
-        entryArray[id] = null;
+        entryArray.splice(id, 1);
         out.removeChild(parentElement);
-        
-        // Speichern als EventEntry
-        let entryContent: EventEntry = new EventEntry(null, null, null, null);
-        // In den Eintragsarray hinzufügen
-        entryArray[id] = entryContent;
-        // Den Array in den localStorage
         entryToStorage(entryArray);
 
         console.log("Eintrag gelöscht.");
+    }
+
+    // Sortieren
+    function sortEntries(): void{
+       
+        
+
     }
 }
