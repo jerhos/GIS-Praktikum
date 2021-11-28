@@ -1,0 +1,118 @@
+/*Navigation*/
+nav {
+    background: rgba(245, 245, 245, 0.85);
+    font-size: 2.5vh;
+    position: fixed;
+    top: 0px;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 13vh;
+    box-shadow: 0px 1px rgba(50, 50,50, 0.3);
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+}
+nav a:hover{
+    font-size: larger;
+    animation: pulse 1s;     
+    }
+nav .image {
+    min-height: 99px;
+    height: 80%;
+    justify-self: center;
+    margin: 1.5vw;
+}
+/*Grundstruktur*/
+body {
+    margin: 0px;
+    padding-bottom: 10vh;
+}
+header {
+    font-family: 'Noto Sans Mono', monospace; 
+}
+footer {
+    /*Box-Layout*/
+    background: rgb(245, 245, 245); 
+    position: fixed;
+    width: 100vw;
+    /*Content-Layout*/
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    bottom: 0px;
+    font-family: 'Noto Sans Mono', sans-serif;
+    line-height: 25%; 
+}
+main div{
+    margin: 2vw;
+    font-family: 'Noto Sans', sans-serif; 
+    display: flex;
+    flex-direction: column;
+} 
+img,p {
+    max-width: 100%;
+    max-height: 100%;
+}
+p::selection,h1::selection,h2::selection {
+    background-color: rgba(255, 174, 0, 0.507);
+}
+[href] {
+    color: rgb(187, 0, 0);
+} 
+[href]::selection {
+    background-color: rgba(255, 174, 0, 0.507);
+}
+@media (orientation: landscape) {
+    video {
+        width: 70%;
+    }
+    #vid {
+        box-sizing: border-box;
+        width: 100vw;
+        display: flex;
+        align-items: flex-end;
+        position: fixed;
+    }
+    #lyr {
+        margin-top: 13vh;
+        padding-right: 70%;
+        width: 35%;
+    }
+    .topContainer {
+        margin-top: 15vh;
+    }
+}
+@media (orientation: portrait) {
+    nav {
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 20vh;
+        padding-top: 1.5vw;
+    }
+    video {
+        width: 100%;
+    }
+    #vid {
+        box-sizing: border-box;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        position: fixed;
+        padding-right: 2vh;
+        top: 17vh;
+    }
+    #lyr {
+        margin-top: 45vh;
+    }
+    .topContainer {
+        margin-top: 20vh;
+    }
+}
+@keyframes pulse {
+    20% {
+      padding: 30px;
+    }
+}
+#einbettung {
+    height: calc(100vw / 16 * 9);
+}

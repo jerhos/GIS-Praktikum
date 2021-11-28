@@ -15,25 +15,62 @@ var a4;
     console.log(dateIn);
     // Neuer Eintrag
     function addEntry() {
-        let eventnameVal = eventnameIn.value;
-        let interpretVal = interpretIn.value;
-        let priceVal = Number(priceIn.value);
-        let dateVal = new Date(dateIn.value);
+        let eventnameVal = null;
+        let interpretVal = null;
+        let priceVal = null;
+        let dateVal = null;
+        // EventnameIn
+        try {
+            eventnameVal = document.getElementById("eventnameIn").value;
+            if (eventnameVal === "") {
+                throw new Error;
+            }
+        }
+        catch (error) {
+            throw new Error("Die Eventeingabe ist leer.");
+        }
+        // InterpretIn
+        try {
+            interpretVal = document.getElementById("interpretIn").value;
+            if (interpretVal === "") {
+                throw new Error;
+            }
+        }
+        catch (error) {
+            throw new Error("Die Interpreteneingabe ist leer.");
+        }
+        // PriceIn
+        try {
+            priceVal = parseInt(document.getElementById("priceIn").value);
+            if (priceVal.toString() === "NaN") {
+                throw new Error;
+            }
+        }
+        catch (error) {
+            throw new Error("Die Preiseingabe ist leer.");
+        }
+        // DateIn
+        try {
+            dateVal = new Date(document.getElementById("dateIn").value);
+            if (dateVal.toString() === "Invalid Date") {
+                throw new Error;
+            }
+        }
+        catch (error) {
+            throw new Error("Die Termineingabe ist leer oder ungültiges Datum.");
+        }
         let entry = document.createElement("div");
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "ⓧ Löschen";
         entry.textContent = eventnameVal + "; " + interpretVal + "; " + priceVal + "; " + dateVal;
         out.appendChild(entry);
-        entry.appendChild(deleteButton); //füge den Delete Button als Kindelement dem neu erstellten Element "newElement" hinzu
-        // Eventlistener für den Deletebutton
-        deleteButton.addEventListener("click", function () {
-            deleteEvent(entry); //Übergeben wird als Parameter das Element, welches später gelöscht werden soll.
-        });
+        entry.appendChild(deleteButton);
+        deleteButton.addEventListener("click", function () { deleteEntry(entry); });
     }
-    // Eventlistener für die Delete-Buttons
-    function deleteEvent(parentElement) {
-        console.log("deleteEvent wurde aufgerufen!"); // Konsolenausgabe zum Testen des Funktionsaufrufes
-        out.removeChild(parentElement); //Lösche das als Parameter übergebene Element aus dem Elter-Element "display"
+    // Eintrag löschen
+    function deleteEntry(parentElement) {
+        console.log("Eintrag gelöscht.");
+        out.removeChild(parentElement);
     }
 })(a4 || (a4 = {}));
 //# sourceMappingURL=events.js.map
