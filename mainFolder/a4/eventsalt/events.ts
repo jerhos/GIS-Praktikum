@@ -147,6 +147,7 @@ namespace a4 {
         } catch (error) {
            throw new Error("Die Termineingabe ist leer.");
         }
+        
         // Kontrolle Input
         console.log(`>>>Input<<<\n${eventname}\n${interpret}\n${price}\n${date}`);
         // Neues Tabellenelement erzeugen

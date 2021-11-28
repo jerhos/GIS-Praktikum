@@ -17,10 +17,47 @@ namespace a4 {
     // Neuer Eintrag
     function addEntry(): void {
        
-        let eventnameVal: string = eventnameIn.value;
-        let interpretVal: string = interpretIn.value;
-        let priceVal: number = Number(priceIn.value);
-        let dateVal: Date = new Date(dateIn.value);
+        let eventnameVal: string = null;
+        let interpretVal: string = null;
+        let priceVal: number = null;
+        let dateVal: Date = null;
+ 
+        // EventnameIn
+        try {
+            eventnameVal = (<HTMLInputElement>document.getElementById("eventnameIn")).value;
+            if (eventnameVal === "") {
+                throw new Error;
+            }
+        } catch (error) {
+            throw new Error("Die Eventeingabe ist leer.");
+        }
+        // InterpretIn
+        try {
+            interpretVal = (<HTMLInputElement>document.getElementById("interpretIn")).value;
+            if (interpretVal === "") {
+                throw new Error;
+            }
+        } catch (error) {
+            throw new Error("Die Interpreteneingabe ist leer.");
+        }
+        // PriceIn
+        try {
+            priceVal = parseInt((<HTMLInputElement>document.getElementById("priceIn")).value);
+            if (priceVal.toString() === "NaN") {
+                throw new Error;
+            }
+        } catch (error) {
+            throw new Error("Die Preiseingabe ist leer.");
+        }
+        // DateIn
+        try {
+            dateVal = new Date((<HTMLInputElement>document.getElementById("dateIn")).value);
+            if (dateVal.toString() === "Invalid Date") {
+                throw new Error;
+            }
+        } catch (error) {
+           throw new Error("Die Termineingabe ist leer oder ungültiges Datum.");
+        }
 
         let entry: HTMLDivElement = document.createElement("div");
         let deleteButton: HTMLButtonElement = document.createElement("button");
@@ -29,20 +66,13 @@ namespace a4 {
         entry.textContent = eventnameVal + "; " + interpretVal + "; " + priceVal + "; " + dateVal; 
 
         out.appendChild(entry);
-
-        entry.appendChild(deleteButton); //füge den Delete Button als Kindelement dem neu erstellten Element "newElement" hinzu
-
-        // Eventlistener für den Deletebutton
-        deleteButton.addEventListener("click", function(): void {
-        deleteEvent(entry); //Übergeben wird als Parameter das Element, welches später gelöscht werden soll.
-     }
-     );
-
+        entry.appendChild(deleteButton);
+        deleteButton.addEventListener("click", function(): void {deleteEntry(entry); });
     }
 
-    // Eventlistener für die Delete-Buttons
-    function deleteEvent(parentElement: HTMLDivElement): void {
-        console.log("deleteEvent wurde aufgerufen!"); // Konsolenausgabe zum Testen des Funktionsaufrufes
-        out.removeChild(parentElement); //Lösche das als Parameter übergebene Element aus dem Elter-Element "display"
+    // Eintrag löschen
+    function deleteEntry(parentElement: HTMLDivElement): void {
+        console.log("Eintrag gelöscht.");
+        out.removeChild(parentElement);
     }
 }
