@@ -116,3 +116,12 @@ p::selection,h1::selection,h2::selection {
 #einbettung {
     height: calc(100vw / 16 * 9);
 }
+.topContainer input,button{
+    padding: 8px;
+    margin: 5px;
+}
+.centered {
+    flex-direction: row;
+    align-self: center;
+    
+}

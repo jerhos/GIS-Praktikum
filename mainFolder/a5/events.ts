@@ -17,6 +17,10 @@ namespace a4 {
 
     // Variablen und so
     const out: HTMLElement = <HTMLElement>document.querySelector("#out");
+    const eventnameIn: HTMLInputElement = <HTMLInputElement>document.getElementById("eventnameIn");
+    const interpretIn: HTMLInputElement = <HTMLInputElement>document.getElementById("interpretIn"); 
+    const priceIn: HTMLInputElement = <HTMLInputElement>document.getElementById("priceIn"); 
+    const dateIn: HTMLInputElement = <HTMLInputElement>document.getElementById("dateIn");
     const entryAdder: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#entryAdder");
     let entryArray: EventEntry[] = [];                                                                // Hier werden alle Events abgespeichert
     let entryCount: number = 0;                                                                       // Zählt die Anzahl der Events
@@ -32,59 +36,96 @@ namespace a4 {
         let interpretVal: string = null;
         let priceVal: number = null;
         let dateVal: Date = null;
- 
-        // EventnameIn
-        try {
-            eventnameVal = (<HTMLInputElement>document.getElementById("eventnameIn")).value;
-            if (eventnameVal === "") {
+        let inputerror: boolean  = false;
+       
+        eventnameIn.setAttribute("style", "border-color: light-gray;");
+        interpretIn.setAttribute("style", "border-color: light-gray;");
+        priceIn.setAttribute("style", "border-color: light-gray;");
+        dateIn.setAttribute("style", "border-color: light-gray;");
+
+        try {           
+            // EventnameIn
+            try {
+                eventnameVal = (<HTMLInputElement>document.getElementById("eventnameIn")).value;
+                if (eventnameVal === "") {
                 throw new Error;
+                }
+            } catch (error) {
+                eventnameIn.setAttribute("style", "border-color: red;");
+                inputerror = true;
             }
-        } catch (error) {
-            throw new Error("Die Eventeingabe ist leer.");
-        }
-        // InterpretIn
-        try {
-            interpretVal = (<HTMLInputElement>document.getElementById("interpretIn")).value;
-            if (interpretVal === "") {
+            // InterpretIn
+            try {
+                interpretVal = (<HTMLInputElement>document.getElementById("interpretIn")).value;
+                if (interpretVal === "") {
                 throw new Error;
+                }
+            } catch (error) {
+                interpretIn.setAttribute("style", "border-color: red;");
+                inputerror = true;
             }
-        } catch (error) {
-            throw new Error("Die Interpreteneingabe ist leer.");
-        }
-        // PriceIn
-        try {
-            priceVal = parseInt((<HTMLInputElement>document.getElementById("priceIn")).value);
-            if (priceVal.toString() === "NaN") {
+            // PriceIn
+            try {
+                priceVal = parseInt((<HTMLInputElement>document.getElementById("priceIn")).value);
+                if (priceVal.toString() === "NaN") {
                 throw new Error;
+                }
+            } catch (error) {
+                priceIn.setAttribute("style", "border-color: red;");
+                inputerror = true;
             }
-        } catch (error) {
-            throw new Error("Die Preiseingabe ist leer.");
-        }
-        // DateIn
-        try {
-            dateVal = new Date((<HTMLInputElement>document.getElementById("dateIn")).value);
-            if (dateVal.toString() === "Invalid Date") {
+            // DateIn
+            try {
+                dateVal = new Date((<HTMLInputElement>document.getElementById("dateIn")).value);
+                if (dateVal.toString() === "Invalid Date") {
                 throw new Error;
+                }
+            } catch (error) {
+                dateIn.setAttribute("style", "border-color: red;");
+                inputerror = true;
             }
+            // Falls ein oder mehrere Eingabefehler vorhanden sind
+            if (inputerror) {
+                throw new Error;
+            }   
         } catch (error) {
-           throw new Error("Die Termineingabe ist leer oder beinhaltet ein ungültiges Datum.");
+          throw new Error("FEHLER BEI DER EINGABE");  
         }
         
+        // Erzeugen und darstellen
         display(eventnameVal, interpretVal, priceVal, dateVal);
     }
 
     // Erstellt die dynamischen Elemente
     function display(eventnameVal: string, interpretVal: string, priceVal: number, dateVal: Date): void {
         
+        // Erzeugen eines Eintragselement mit id und Button
         let entry: HTMLDivElement = document.createElement("div");
         entry.setAttribute("id", `${entryCount}`);
         let deleteButton: HTMLButtonElement = document.createElement("button");
         deleteButton.textContent = "ⓧ Löschen";
+         // Erzeugen des Eintragsinhalt
+        let date: HTMLElement = document.createElement("td");
+        try {
+            date.textContent = `${dateVal.toISOString().substr(8, 2)}.${dateVal.toISOString().substr(5, 2)}.${dateVal.toISOString().substr(0, 4)} | ${dateVal.toISOString().substr(11, 2)}:${dateVal.toISOString().substr(14, 2)} Uhr`;
+        } catch (error) { // Das Date-Format wird durch die JSON-Umwandlung abgewndelt und funktioniert dadurch nicht mehr gleich
+            date.textContent = `${dateVal.toString().substr(8, 2)}.${dateVal.toString().substr(5, 2)}.${dateVal.toString().substr(0, 4)} | ${dateVal.toString().substr(11, 2)}:${dateVal.toString().substr(14, 2)} Uhr`;
+        }
+        let eventname: HTMLElement = document.createElement("td");
+        eventname.textContent = eventnameVal;
+        let interpret: HTMLElement = document.createElement("td");
+        interpret.textContent = interpretVal;
+        let price: HTMLElement = document.createElement("td");
+        price.textContent = `${priceVal.toString()},-`;
 
-        entry.textContent = eventnameVal + "; " + interpretVal + "; " + priceVal + "; " + dateVal; 
-
+        // Positionieren der erzeugten Elemente
         out.appendChild(entry);
+        entry.appendChild(date);
+        entry.appendChild(eventname);
+        entry.appendChild(interpret);
+        entry.appendChild(price);
         entry.appendChild(deleteButton);
+        // Dem Löschkopf eine Funktion zuweisen
         deleteButton.addEventListener("click", function(): void {deleteEntry(entry); });
 
         // Speichern als EventEntry
@@ -99,15 +140,15 @@ namespace a4 {
     // Eintrag zum localStorage
     function entryToStorage(entryArray: EventEntry[]): void {
         let entryString: string = JSON.stringify(entryArray);
-        localStorage.setItem("entryInStorage", entryString);
-        console.log(localStorage.getItem("entryInStorage"));
+        localStorage.setItem("entriesInStorage", entryString);
+        console.log(localStorage.getItem("entriesInStorage"));
     }
 
     // Update beim Laden
     function updateOnLoad(): void {
-        let stringFrmStrg: string = localStorage.getItem("entryInStorage");
+        let stringFrmStrg: string = localStorage.getItem("entriesInStorage");
         let entriesFrmLclStrg: EventEntry[] = JSON.parse(stringFrmStrg);
-        console.log("Array mit dem Key 'entryInStorage': ", entriesFrmLclStrg);
+        console.log("Arrays mit dem Key 'entriesInStorage': ", entriesFrmLclStrg);
 
         // Update --> add Entry
         let eventnameVal: string = null;
@@ -139,15 +180,9 @@ namespace a4 {
         console.log(`ID: ${id}`);
         entryArray.splice(id, 1);
         out.removeChild(parentElement);
+        // Updated den localStorage
         entryToStorage(entryArray);
 
         console.log("Eintrag gelöscht.");
-    }
-
-    // Sortieren
-    function sortEntries(): void{
-       
-        
-
     }
 }
