@@ -4,17 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
     <title>Client-Site</title>
     <script src="client.js" defer></script>
 </head>
 <body>
-    <h1>Client-Site</h1>
-    <div>
-        <form id="form">
-            <input type="date" id="dateIn">
-            <button type="button" id="sendButton">Send</button>
-            <p id="resp"></p>
-        </form>
+    <div class="defMargin">
+        <h1>Client-Server-Kommunikation</h1>
+        <div class="defMargin">
+            <form id="form">
+                <h4>Client Eingabe:</h4>
+                <input type="date" id="dateIn">
+                <button type="button" id="sendButton">Senden</button> 
+                <p id="clientDate"></p>
+            </form>
+            <div>
+                <h4 id="resp-head"></h4>
+                <p id="resp"></p>
+            </div>
+        </div>
     </div>
+    <footer>
+        <p><a href="#top">Nach oben</a></p>
+        <p><a href="https://jerhos.github.io/GIS-Praktikum/">Zurück zur Praktikumsstartseite</a></p>
+        <p><a href="https://jerhos.github.io/GIS-Praktikum/mainFolder/exerciselist">Zurück zur Webseitenauswahl</a></p>
+    </footer>
 </body>
 </html>

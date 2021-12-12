@@ -26,9 +26,9 @@ namespace Server {
         case "/convertDate":
           let dateString: string = url.searchParams.get("date");
           console.log(dateString);
-          let date: Date = new Date(JSON.parse(dateString));
+          let date: Date = new Date(dateString.substring(1, 25));
           console.log(date);
-          response.write(`Day: ${date.getDate()} | Month: ${date.getMonth() + 1} | Year: ${date.getFullYear()}`); //Definieren der Rückgabe mit der name-Variable
+          response.write(`Day: ${date.getDate()} | Month: ${date.getMonth() + 1} | Year: ${date.getFullYear()}`);
           break;
         // = Pfad nicht gefunden
         default:
