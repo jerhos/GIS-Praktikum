@@ -1,0 +1,8 @@
+*.wt
+*.log
+*.turtle
+*.bson
+*.lock
+*/journal/
+*/diagnostic.data/
+*pdb
