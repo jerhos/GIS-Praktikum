@@ -1,4 +1,4 @@
-namespace a4 {
+namespace a5 {
  
     // Tabelleneintrag
     class EventEntry {

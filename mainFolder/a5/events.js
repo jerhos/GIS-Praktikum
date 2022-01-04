@@ -1,6 +1,6 @@
 "use strict";
-var a4;
-(function (a4) {
+var a5;
+(function (a5) {
     // Tabelleneintrag
     class EventEntry {
         eventname;
@@ -174,5 +174,5 @@ var a4;
         entryToStorage(entryArray);
         console.log("Eintrag gelöscht.");
     }
-})(a4 || (a4 = {}));
+})(a5 || (a5 = {}));
 //# sourceMappingURL=events.js.map
