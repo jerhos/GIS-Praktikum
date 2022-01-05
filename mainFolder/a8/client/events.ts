@@ -10,6 +10,7 @@ namespace a8 {
 
     const url: string ="http://127.0.0.1:2222";
     const path : string = "/concertEvents";
+    const path_del : string = "/deleteEntry";
     
     const out: HTMLElement = <HTMLElement>document.querySelector("#out");
     const eventnameIn: HTMLInputElement = <HTMLInputElement>document.getElementById("eventnameIn");
@@ -19,8 +20,8 @@ namespace a8 {
     const entryAdder: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#entryAdder");
     let entryCount: number = 0;
     
-    // Mache nach dem Laden folgendes:
-    updateOnLoad();
+    // Mache nach dem Seitenaufruf folgendes:
+    loadEntries();
     entryAdder.addEventListener("click", addEntry, false);
     
     // Neuer Eintrag
@@ -100,8 +101,7 @@ namespace a8 {
     }
 
     // Erstellt die dynamischen Elemente
-    function display(event: Event): void {
-        
+    function display(event: Event): void {        
         // Erzeugen eines Eintragselement mit id und Button
         let entry: HTMLDivElement = document.createElement("div");
         entry.setAttribute("id", `${entryCount}`);
@@ -109,7 +109,11 @@ namespace a8 {
         deleteButton.textContent = "ⓧ Löschen";
          // Erzeugen des Eintragsinhalt
         let date: HTMLElement = document.createElement("td");
-        date.textContent = `${event.dateVal.toLocaleDateString()} | ${event.dateVal.toLocaleTimeString()} Uhr`;
+        try {
+            date.textContent = `${event.dateVal.toISOString().substring(8, 10)}.${event.dateVal.toISOString().substring(5, 7)}.${event.dateVal.toISOString().substring(0, 4)} | ${event.dateVal.toISOString().substring(11, 13)}:${event.dateVal.toISOString().substring(14, 16)} Uhr`;
+        } catch (error) { // Das Date-Format wird durch die JSON-Umwandlung abgewndelt und funktioniert dadurch nicht mehr gleich
+            date.textContent = `${event.dateVal.toString().substring(8, 10)}.${event.dateVal.toString().substring(5, 7)}.${event.dateVal.toString().substring(0, 4)} | ${event.dateVal.toString().substring(11, 13)}:${event.dateVal.toString().substring(14, 16)} Uhr`;
+        }
         let eventname: HTMLElement = document.createElement("td");
         eventname.textContent = event.nameVal;
         let interpret: HTMLElement = document.createElement("td");
@@ -130,15 +134,21 @@ namespace a8 {
     }
 
     // Eintrag löschen
-    function deleteEntry(parentElement: HTMLDivElement): void {
-        console.log("Eintrag gelöscht.");
+    async function deleteEntry(parentElement: HTMLDivElement): Promise<void> {
+        let _id: number = parseInt((<HTMLElement>parentElement).getAttribute("id"));
         out.removeChild(parentElement);
+        let delPara: string = "?delete=" + _id;
+        await fetch(url + path_del + delPara, {
+            method: "get",
+        });
+        loadEntries();
+        console.log(`Entry with id ${_id} deleted.`);
     }
 
     // Sendet einen POST-Befehl
     async function saveEntry(event: Event): Promise<void> {
         let eventstring: string = JSON.stringify(event);
-        console.log("Attempting to save in database:");
+        console.log("Saving in database:");
         console.log(eventstring);
         await fetch(url + path, {
             method: "post",
@@ -147,12 +157,18 @@ namespace a8 {
     }
     
     // Sendet einen GET-Request
-    async function updateOnLoad(): Promise<void> {
+    async function loadEntries(): Promise<void> {
         let response = await fetch(url + path, {method: "get"});
         let responseText = await response.text();
-        console.log(responseText);
-
-        // Setze entryCount auf _id+1, danit nichts überschrieben wird
-        //entryCount = event._id;
+        let responseEvents: Event[] = JSON.parse(responseText);
+        console.log(`Found existing events:`);
+        console.log(responseEvents);
+        try {
+            while (entryCount < responseEvents.length) {
+                display(responseEvents[entryCount]);
+            }
+        } catch (error) {
+           console.log("Nichts in der Datenbank."); 
+        }
     }
 }

@@ -4,5 +4,6 @@
 *.bson
 *.lock
 */journal/
+*\journal\
 */diagnostic.data/
 *pdb
