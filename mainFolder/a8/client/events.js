@@ -3,6 +3,7 @@ var a8;
 (function (a8) {
     const url = "http://127.0.0.1:2222";
     const path = "/concertEvents";
+    const path_del = "/deleteEntry";
     const out = document.querySelector("#out");
     const eventnameIn = document.getElementById("eventnameIn");
     const interpretIn = document.getElementById("interpretIn");
@@ -10,8 +11,8 @@ var a8;
     const dateIn = document.getElementById("dateIn");
     const entryAdder = document.querySelector("#entryAdder");
     let entryCount = 0;
-    // Mache nach dem Laden folgendes:
-    updateOnLoad();
+    // Mache nach dem Seitenaufruf folgendes:
+    loadEntries();
     entryAdder.addEventListener("click", addEntry, false);
     // Neuer Eintrag
     function addEntry() {
@@ -97,7 +98,12 @@ var a8;
         deleteButton.textContent = "ⓧ Löschen";
         // Erzeugen des Eintragsinhalt
         let date = document.createElement("td");
-        date.textContent = `${event.dateVal.toLocaleDateString()} | ${event.dateVal.toLocaleTimeString()} Uhr`;
+        try {
+            date.textContent = `${event.dateVal.toISOString().substring(8, 10)}.${event.dateVal.toISOString().substring(5, 7)}.${event.dateVal.toISOString().substring(0, 4)} | ${event.dateVal.toISOString().substring(11, 13)}:${event.dateVal.toISOString().substring(14, 16)} Uhr`;
+        }
+        catch (error) { // Das Date-Format wird durch die JSON-Umwandlung abgewndelt und funktioniert dadurch nicht mehr gleich
+            date.textContent = `${event.dateVal.toString().substring(8, 10)}.${event.dateVal.toString().substring(5, 7)}.${event.dateVal.toString().substring(0, 4)} | ${event.dateVal.toString().substring(11, 13)}:${event.dateVal.toString().substring(14, 16)} Uhr`;
+        }
         let eventname = document.createElement("td");
         eventname.textContent = event.nameVal;
         let interpret = document.createElement("td");
@@ -116,14 +122,20 @@ var a8;
         entryCount++;
     }
     // Eintrag löschen
-    function deleteEntry(parentElement) {
-        console.log("Eintrag gelöscht.");
+    async function deleteEntry(parentElement) {
+        let _id = parseInt(parentElement.getAttribute("id"));
         out.removeChild(parentElement);
+        let delPara = "?delete=" + _id;
+        await fetch(url + path_del + delPara, {
+            method: "get",
+        });
+        loadEntries();
+        console.log(`Entry with id ${_id} deleted.`);
     }
     // Sendet einen POST-Befehl
     async function saveEntry(event) {
         let eventstring = JSON.stringify(event);
-        console.log("Attempting to save in database:");
+        console.log("Saving in database:");
         console.log(eventstring);
         await fetch(url + path, {
             method: "post",
@@ -131,12 +143,20 @@ var a8;
         });
     }
     // Sendet einen GET-Request
-    async function updateOnLoad() {
+    async function loadEntries() {
         let response = await fetch(url + path, { method: "get" });
         let responseText = await response.text();
-        console.log(responseText);
-        // Setze entryCount auf _id+1, danit nichts überschrieben wird
-        //entryCount = event._id;
+        let responseEvents = JSON.parse(responseText);
+        console.log(`Found existing events:`);
+        console.log(responseEvents);
+        try {
+            while (entryCount < responseEvents.length) {
+                display(responseEvents[entryCount]);
+            }
+        }
+        catch (error) {
+            console.log("Nichts in der Datenbank.");
+        }
     }
 })(a8 || (a8 = {}));
 //# sourceMappingURL=events.js.map
