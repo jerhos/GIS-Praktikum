@@ -86,13 +86,12 @@ namespace Server {
         case "/deleteEntry":
           console.log(">>Client is communicating...<<");
           console.log(`Request: DELETE`);
-          let id: string = url.searchParams.get("delete");
-          
-          console.log();
-          console.log(`Deleting entry with id ${id}`);
+          let idNum: number = parseInt(url.searchParams.get("delete"));
+          console.log(idNum);
+          console.log(`Deleting entry with id ${idNum}`);
           try {
             await mongoClient.connect();
-            await mongoClient.db(db).collection(dbCollection).deleteOne({_id: new mongo.ObjectId()});
+            await mongoClient.db(db).collection(dbCollection).deleteOne({_id: new mongo.ObjectId(idNum)});
             console.log("Successfully deleted.");
           } catch (error) {
             console.error(error);
